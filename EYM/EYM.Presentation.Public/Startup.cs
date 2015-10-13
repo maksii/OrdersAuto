@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(EYM.Presentation.Public.Startup))]
-
+[assembly: OwinStartupAttribute(typeof(EYM.Presentation.Public.Startup))]
 namespace EYM.Presentation.Public
 {
-	public partial class Startup
-	{
-		public void Configuration(IAppBuilder app)
-		{
-			ConfigureAuth(app);
-		}
-	}
+    public partial class Startup
+    {
+        public void Configuration(IAppBuilder app)
+        {
+            ConfigureAuth(app);
+        }
+    }
 }
