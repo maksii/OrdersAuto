@@ -4,9 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EYM.Logging
+namespace EYM.Logging.Interfaces
 {
-    public class Class1
-    {
-    }
+	public enum LogLevelEnum
+	{
+		Fatal,
+		Error,
+		Warn,
+		Info,
+		Debug,
+		Trace,
+	}
 }
