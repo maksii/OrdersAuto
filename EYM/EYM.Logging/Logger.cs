@@ -26,12 +26,16 @@ namespace EYM.Logging
 
 		public void Debug(string message, params object[] arguments)
 		{
+#if DEBUG
 			_logger.Debug(message);
+#endif
 		}
 
 		public void Debug(Exception exception, params object[] arguments)
 		{
+#if DEBUG
 			_logger.Debug(exception);
+#endif
 		}
 
 		public void Warning(string message, params object[] arguments)
