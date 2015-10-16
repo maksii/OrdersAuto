@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EYM.Logging.Interfaces
 {
 	public interface ILogging
 	{
-		void Log(string message, LogLevelEnum level);
+		void Info(string message, params object[] arguments);
+		void Info(Exception exception, params object[] arguments);
 
-		void Log(Exception exception, LogLevelEnum level);
+		void Debug(string message, params object[] arguments);
+		void Debug(Exception exception, params object[] arguments);
 
-		bool Enabled
-		{
-			get;
-			set;
-		}
+		void Warning(string message, params object[] arguments);
+		void Warning(Exception exception, params object[] arguments);
+
+		void Error(string message, params object[] arguments);
+		void Error(Exception exception, params object[] arguments);
 	}
 }
