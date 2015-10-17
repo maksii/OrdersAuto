@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.Compilation;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
+using Autofac.Core;
 using Autofac.Integration.Mvc;
+using EYM.AppServices.Interfaces;
+using EYM.AppServices;
 
 namespace EYM.Presentation.Public
 {
@@ -23,11 +27,19 @@ namespace EYM.Presentation.Public
 			//IoC initialization
 			var builder = new ContainerBuilder();
 
+
+			//Get all referenced assemblies and register modules
+			Assembly[] ass = BuildManager.GetReferencedAssemblies().Cast<Assembly>().ToArray();
+			builder.RegisterAssemblyModules(ass);
+
 			// Register your MVC controllers.
 			builder.RegisterControllers(typeof(MvcApplication).Assembly);
-
+			
+			builder.RegisterControllers(typeof(MvcApplication).Assembly);
+			
 			// Set the dependency resolver to be Autofac.
 			var container = builder.Build();
+
 			DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
     }
