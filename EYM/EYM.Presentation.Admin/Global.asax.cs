@@ -28,7 +28,8 @@ namespace EYM.Presentation.Admin
 			var builder = new ContainerBuilder();
 
 			// Get your HttpConfiguration.
-			var config = new HttpSelfHostConfiguration("http://localhost:8080"); 
+			var config = new HttpSelfHostConfiguration("http://localhost:8080");
+			//var config = GlobalConfiguration.Configuration;
 
 			// Register your Web API controllers.
 			builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
@@ -38,7 +39,7 @@ namespace EYM.Presentation.Admin
 
 			// Set the dependency resolver to be Autofac.
 			var container = builder.Build();
-			//config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+			config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }
     }
 }
