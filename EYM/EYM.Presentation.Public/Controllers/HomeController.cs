@@ -10,9 +10,11 @@ namespace EYM.Presentation.Public.Controllers
 		public ActionResult Index()
 		{
 			
-		
-				var service = DependencyResolver.Current.GetService<IAppService>();
-				//service.Serve();
+			/*
+			 * IoC demonstration:
+			 * var service = DependencyResolver.Current.GetService<IAppService>();
+			 * service.Serve();
+			 */
 		
 			return View();
 		}
