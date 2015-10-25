@@ -51,12 +51,19 @@
   <ItemGroup>
     <Compile Include="Context.cs" />
     <Compile Include="EntityFrameworkModule.cs" />
+    <Compile Include="EntityFrameworkRepository.cs" />
+    <Compile Include="EYMContext.cs" />
+    <Compile Include="EYMRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EYM.Entities\EYM.Entities.csproj">
+      <Project>{e9c810ab-daa0-4c23-ba22-2abd5ae5c68b}</Project>
+      <Name>EYM.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EYM.EntityFramework.Interfaces\EYM.EntityFramework.Interfaces.csproj">
       <Project>{d06bfb10-9192-49f8-8240-ac2105de6f2d}</Project>
       <Name>EYM.EntityFramework.Interfaces</Name>
