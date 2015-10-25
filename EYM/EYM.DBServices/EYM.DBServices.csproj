@@ -43,12 +43,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBServicesModule.cs" />
+    <Compile Include="MyDBService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EYM.DBServices.Interfaces\EYM.DBServices.Interfaces.csproj">
+      <Project>{3e6bb10f-c30e-4d35-99f8-cec1f1663908}</Project>
+      <Name>EYM.DBServices.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EYM.Repositories.Interfaces\EYM.Repositories.Interfaces.csproj">
+      <Project>{1c233b21-793c-453e-94cd-068e51a20f99}</Project>
+      <Name>EYM.Repositories.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Q /Y "$(TargetPath)" "$(SolutionDir)\EYM.Presentation.Public\Plugins"
+xcopy /Q /Y "$(TargetPath)" "$(SolutionDir)\EYM.Presentation.Admin\Plugins"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

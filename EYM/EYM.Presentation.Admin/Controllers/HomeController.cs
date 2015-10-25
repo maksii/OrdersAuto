@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using EYM.AppServices.Interfaces;
+using System.Web.Http;
 
 namespace EYM.Presentation.Admin.Controllers
 {
@@ -10,6 +8,10 @@ namespace EYM.Presentation.Admin.Controllers
 	{
 		public ActionResult Index()
 		{
+
+			//var service = GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(IAppService));
+			//((IAppService)service).Serve();
+
 			return View();
 		}
 

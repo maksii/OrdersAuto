@@ -1,12 +1,19 @@
-﻿using EYM.AppServices.Interfaces;
+﻿using System;
+using EYM.AppServices.Interfaces;
+using EYM.DBServices.Interfaces;
 
 namespace EYM.AppServices
 {
 	public class MyService : IAppService
 	{
+		IMyDBService _dbService;
+        public MyService(IMyDBService dbService)
+		{
+			_dbService = dbService;
+        }
 		public void Serve()
 		{
-			throw new System.NotImplementedException();
-		}
+			_dbService.Serve();
+        }
 	}
 }

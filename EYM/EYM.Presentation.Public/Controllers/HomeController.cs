@@ -3,20 +3,23 @@ using Autofac;
 using EYM.AppServices.Interfaces;
 using System.Web;
 
+
+
 namespace EYM.Presentation.Public.Controllers
 {
 	public class HomeController : Controller
 	{
 		public ActionResult Index()
 		{
-			
+
 			/*
 			 * IoC demonstration:
 			 * var service = DependencyResolver.Current.GetService<IAppService>();
 			 * service.Serve();
 			 */
-		
-			return View();
+
+
+            return View();
 		}
 
 		public ActionResult About()
