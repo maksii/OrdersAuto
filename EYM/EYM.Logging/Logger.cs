@@ -21,6 +21,7 @@ namespace EYM.Logging
 
 		public void Info(Exception exception, params object[] arguments)
 		{
+			//llll
 			_logger.Info(exception);
 		}
 
