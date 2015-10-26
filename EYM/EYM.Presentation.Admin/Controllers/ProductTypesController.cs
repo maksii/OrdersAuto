@@ -7,12 +7,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EYM.Entities;
+using EYM.EntityFramework;
 
 namespace EYM.Presentation.Admin.Controllers
 {
     public class ProductTypesController : Controller
     {
-        private DinnerContext db = new DinnerContext();
+        private EYMContext db = new EYMContext();
 
         // GET: ProductTypes
         public ActionResult Index()

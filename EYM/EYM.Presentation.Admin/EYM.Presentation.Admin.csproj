@@ -263,16 +263,21 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Orders\Create.cshtml" />
-    <Content Include="Views\Orders\Delete.cshtml" />
-    <Content Include="Views\Orders\Details.cshtml" />
-    <Content Include="Views\Orders\Edit.cshtml" />
-    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\OrderLines\Create.cshtml" />
     <Content Include="Views\OrderLines\Delete.cshtml" />
     <Content Include="Views\OrderLines\Details.cshtml" />
     <Content Include="Views\OrderLines\Edit.cshtml" />
     <Content Include="Views\OrderLines\Index.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Products\Create.cshtml" />
     <Content Include="Views\Products\Delete.cshtml" />
     <Content Include="Views\Products\Details.cshtml" />
@@ -298,11 +303,6 @@
     <Content Include="Views\Roles\Details.cshtml" />
     <Content Include="Views\Roles\Edit.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\UserBalances\Create.cshtml" />
     <Content Include="Views\UserBalances\Delete.cshtml" />
     <Content Include="Views\UserBalances\Details.cshtml" />
@@ -323,6 +323,10 @@
     <ProjectReference Include="..\EYM.Entities\EYM.Entities.csproj">
       <Project>{e9c810ab-daa0-4c23-ba22-2abd5ae5c68b}</Project>
       <Name>EYM.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EYM.EntityFramework\EYM.EntityFramework.csproj">
+      <Project>{04a54a04-cc65-4caa-b943-a4d7f652cfe1}</Project>
+      <Name>EYM.EntityFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
