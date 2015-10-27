@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Linq;
 using System.Data.Entity;
+using EYM.EntityFramework.Interfaces;
 using EYM.Repositories.Interfaces;
 using System.Linq.Expressions;
 
 namespace EYM.EntityFramework
 {
-    class EntityFrameworkRepository<TContext, TEntity> : IGenericDataRepository<TEntity>
+    class EntityFrameworkRepository<TEntity> : IGenericDataRepository<TEntity>
         where TEntity : class, IEntity
-        where TContext : DbContext, new()
     {
-        private TContext _context = new TContext();
+        private IContext _context;
         private bool _disposed = false;
 
-        public TContext Context
+        public IContext Context
         {
             get { return _context; }
             set { _context = value; }
         }
+
+	    public EntityFrameworkRepository(IContext context)
+	    {
+		    _context = context;
+	    }
 
         public virtual IQueryable<TEntity> GetAll()
         {
@@ -46,7 +51,7 @@ namespace EYM.EntityFramework
 
         public virtual bool Update(TEntity entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            _context.Update(entity);
             _context.SaveChanges();
             return true;
         }
