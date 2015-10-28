@@ -1,13 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EYM.Repositories.Interfaces;
 
 namespace EYM.Entities
 {
-	public class OrderLine
+	public class OrderLine : IEntity
 	{
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int OrderLineId { get; set; }
+		public int Id { get; set; }
 		public int Quantity { get; set; }
 		public string Comment { get; set; }
 

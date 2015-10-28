@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EYM.Repositories.Interfaces;
 
 namespace EYM.Entities
 {
-	public class Product
+	public class Product : IEntity
 	{
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int ProductId { get; set; }
+		public int Id { get; set; }
 		public double Price { get; set; }
 		public DateTime DateToOrder { get; set; }
 

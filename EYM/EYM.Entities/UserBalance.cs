@@ -1,14 +1,15 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EYM.Repositories.Interfaces;
 
 namespace EYM.Entities
 {
-	public class UserBalance
+	public class UserBalance : IEntity
 	{
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int UserBalanceId { get; set; }
+		public int Id { get; set; }
 		public double Credit { get; set; }
 		public DateTime Date { get; set; }
 		public string Comment { get; set; }

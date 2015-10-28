@@ -20,5 +20,10 @@ namespace EYM.EntityFramework
         {
             return base.Set<TEntity>();
         }
-    }
+
+		public void Update(IEntity entity)
+		{
+			Entry(entity).State = EntityState.Modified;
+		}
+	}
 }
