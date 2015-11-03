@@ -17,7 +17,7 @@ namespace EYM.Entities
 
 		public int RoleId { get; set; }
 
-		[ForeignKey("UserId")]
+		[ForeignKey("RoleId")]
 		public virtual Role Role { get; set; }
 
 		public virtual List<UserBalance> UserBalances { get; set; }

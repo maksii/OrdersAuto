@@ -189,6 +189,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511020947559_InitialCreate.cs" />
+    <Compile Include="Migrations\201511020947559_InitialCreate.Designer.cs">
+      <DependentUpon>201511020947559_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -261,6 +266,25 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EYM.EntityFramework.Interfaces\EYM.EntityFramework.Interfaces.csproj">
+      <Project>{D06BFB10-9192-49F8-8240-AC2105DE6F2D}</Project>
+      <Name>EYM.EntityFramework.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EYM.EntityFramework\EYM.EntityFramework.csproj">
+      <Project>{04a54a04-cc65-4caa-b943-a4d7f652cfe1}</Project>
+      <Name>EYM.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EYM.Repositories.Interfaces\EYM.Repositories.Interfaces.csproj">
+      <Project>{1c233b21-793c-453e-94cd-068e51a20f99}</Project>
+      <Name>EYM.Repositories.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201511020947559_InitialCreate.resx">
+      <DependentUpon>201511020947559_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

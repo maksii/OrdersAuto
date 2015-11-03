@@ -20,8 +20,8 @@ namespace EYM.Entities
 
 		[ForeignKey("ProviderId")]
 		public virtual Provider Provider { get; set; }
-		[ForeignKey("ProductTypeId")]
 
+		[ForeignKey("ProductTypeId")]
 		public virtual ProductType ProductType { get; set; }
 		public virtual List<Product> Products { get; set; }
 	}
