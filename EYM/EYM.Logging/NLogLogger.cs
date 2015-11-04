@@ -4,11 +4,11 @@ using NLog;
 
 namespace EYM.Logging
 {
-	public class Logger : ILogging
+	public class NLogLogger : ILogging
 	{
 		private readonly NLog.Logger _logger;
 
-		public Logger()
+		public NLogLogger()
 		{
 			LogManager.ReconfigExistingLoggers();
 			_logger = LogManager.GetCurrentClassLogger();
@@ -21,7 +21,6 @@ namespace EYM.Logging
 
 		public void Info(Exception exception, params object[] arguments)
 		{
-			//llll
 			_logger.Info(exception);
 		}
 
