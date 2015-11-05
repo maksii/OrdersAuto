@@ -15,8 +15,8 @@ namespace EYM.Entities
 		public DateTime DateToOrder { get; set; }
 
 		public int ProductTemplateId { get; set; }
-		[ForeignKey("ProductTemplateId")]
 
+		[ForeignKey("ProductTemplateId")]
 		public virtual ProductTemplate ProductTemplate { get; set; }
 		public virtual List<OrderLine> OrderLines { get; set; }
 	}
