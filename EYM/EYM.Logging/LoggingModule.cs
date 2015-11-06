@@ -7,7 +7,7 @@ namespace EYM.Logging
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
-			builder.Register(c => new NLogLogger()).As<ILogging>();
+			builder.RegisterType<NLogLogger>().As<ILogging>();
 		}
 	}
 }
