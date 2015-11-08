@@ -58,7 +58,7 @@ namespace EYM.Presentation.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserId = new SelectList(db.Rols, "RoleId", "Name", user.UserId);
+            ViewBag.UserId = new SelectList(db.Rols, "RoleId", "Name", user.Id);
             return View(user);
         }
 
@@ -74,7 +74,7 @@ namespace EYM.Presentation.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(db.Rols, "RoleId", "Name", user.UserId);
+            ViewBag.UserId = new SelectList(db.Rols, "RoleId", "Name", user.Id);
             return View(user);
         }
 
@@ -91,7 +91,7 @@ namespace EYM.Presentation.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(db.Rols, "RoleId", "Name", user.UserId);
+            ViewBag.UserId = new SelectList(db.Rols, "RoleId", "Name", user.Id);
             return View(user);
         }
 
