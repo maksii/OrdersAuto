@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -163,6 +164,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="Initializer.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -250,10 +252,6 @@
     <ProjectReference Include="..\EYM.AppServices.Interfaces\EYM.AppServices.Interfaces.csproj">
       <Project>{777760ea-e48e-493a-b1ff-62ddf95c8e79}</Project>
       <Name>EYM.AppServices.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EYM.AppServices\EYM.AppServices.csproj">
-      <Project>{70782d83-ba35-4b76-ab09-17fc447b6fea}</Project>
-      <Name>EYM.AppServices</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

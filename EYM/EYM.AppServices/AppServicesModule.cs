@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using EYM.AppServices.Interfaces;
+using EYM.DBServices.Interfaces;
+
 
 namespace EYM.AppServices
 {
@@ -7,7 +9,9 @@ namespace EYM.AppServices
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
-			builder.Register(c => new MyService()).As<IAppService>();
+			builder.Register(c => new MyService(c.Resolve<IMyDBService>()))
+				.As<IAppService>();
+
 		}
 	}
 }

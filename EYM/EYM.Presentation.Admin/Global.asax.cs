@@ -1,12 +1,13 @@
 ﻿using System.Reflection;
-using System.Web.Http;
 using System.Web.Http.SelfHost;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.WebApi;
-
+using System.Web.Compilation;
+using System.Linq;
+using System.Web.Http;
 
 namespace EYM.Presentation.Admin
 {
@@ -22,8 +23,12 @@ namespace EYM.Presentation.Admin
 			//IoC initialization
 			var builder = new ContainerBuilder();
 
+			//Get all referenced assemblies and register modules
+			Assembly[] ass = BuildManager.GetReferencedAssemblies().Cast<Assembly>().ToArray();
+			builder.RegisterAssemblyModules(ass);
+
 			// Get your HttpConfiguration.
-			var config = new HttpSelfHostConfiguration("http://localhost:8080");
+			var config = GlobalConfiguration.Configuration;
 			//var config = GlobalConfiguration.Configuration;
 
 			// Register your Web API controllers.
