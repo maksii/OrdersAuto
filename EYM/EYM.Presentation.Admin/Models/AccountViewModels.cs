@@ -7,8 +7,18 @@ namespace EYM.Presentation.Admin.Models
     {
         [Required]
         [Display(Name = "Email")]
-        public string Email { get; set; }
-    }
+        public string Email {
+			get;
+			set;
+		}
+
+		[Display(Name = "User Name")]
+		public string UserName
+		{
+			get;
+			set;
+		}
+	}
 
     public class ExternalLoginListViewModel
     {

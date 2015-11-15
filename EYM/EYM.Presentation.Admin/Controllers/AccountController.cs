@@ -354,6 +354,35 @@ namespace EYM.Presentation.Admin.Controllers
 				return RedirectToAction("LoginFailed");
 			}
 
+			var remove = false;
+
+			if (remove)
+			{
+				var authManager = HttpContext.GetOwinContext().Authentication;
+				//authManager.GetExternalAuthenticationTypes()
+				try
+				{
+					var me = UserManager.FindByEmail("dmytro.lytvynov@dev-pro.net");
+					var me2 = UserManager.FindByEmail("mitok@aaa.com");
+
+					var userLogins = await UserManager.GetLoginsAsync(me.Id);
+					if (userLogins.Count == 0)
+					{
+						userLogins = await UserManager.GetLoginsAsync(me2.Id);
+						me = me2;
+					}
+					//User.Identity.GetUserId());
+					//loginInfo.ExternalIdentity.GetUserId()
+					//var otherLogins = authManager.GetExternalAuthenticationTypes();
+					//.Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
+					var deleteResult = await UserManager.RemoveLoginAsync(me.Id, new UserLoginInfo(userLogins[0].LoginProvider, userLogins[0].ProviderKey));
+				}
+				catch(Exception ex)
+				{
+					int i = 0;
+				}
+			}
+
 			//loginInfo.DefaultUserName = loginInfo.ExternalIdentity.GetUserName();
 
 			// Sign in the user with this external login provider if the user already has a login
@@ -375,7 +404,7 @@ namespace EYM.Presentation.Admin.Controllers
 					// If the user does not have an account, then prompt the user to create an account
 					ViewBag.ReturnUrl = returnUrl;
 					ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-					return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+					return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email, UserName = loginInfo.ExternalIdentity.GetUserName() });
 			}
 		}
 
