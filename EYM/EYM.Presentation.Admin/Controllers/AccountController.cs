@@ -383,6 +383,9 @@ namespace EYM.Presentation.Admin.Controllers
 				}
 			}
 
+			//TODO: https://developers.google.com/+/web/people/
+			//GET https://www.googleapis.com/plus/v1/people/me
+
 			//loginInfo.DefaultUserName = loginInfo.ExternalIdentity.GetUserName();
 
 			// Sign in the user with this external login provider if the user already has a login
