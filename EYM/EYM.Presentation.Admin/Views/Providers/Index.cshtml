@@ -1,11 +1,5 @@
 ﻿@model IEnumerable<EYM.Entities.Provider>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -59,9 +53,9 @@
             @Html.DisplayFor(modelItem => item.Type)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProviderId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProviderId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProviderId })
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

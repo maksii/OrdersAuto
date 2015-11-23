@@ -54,10 +54,12 @@
     <ProjectReference Include="..\EYM.DBServices.Interfaces\EYM.DBServices.Interfaces.csproj">
       <Project>{3e6bb10f-c30e-4d35-99f8-cec1f1663908}</Project>
       <Name>EYM.DBServices.Interfaces</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\EYM.Repositories.Interfaces\EYM.Repositories.Interfaces.csproj">
       <Project>{1c233b21-793c-453e-94cd-068e51a20f99}</Project>
       <Name>EYM.Repositories.Interfaces</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

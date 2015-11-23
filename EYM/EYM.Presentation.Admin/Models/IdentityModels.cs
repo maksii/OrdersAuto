@@ -29,5 +29,7 @@ namespace EYM.Presentation.Admin.Models
         {
             return new ApplicationDbContext();
         }
+
+		public System.Data.Entity.DbSet<EYM.Entities.Provider> Providers { get; set; }
     }
 }

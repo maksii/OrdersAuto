@@ -66,14 +66,17 @@
     <ProjectReference Include="..\EYM.Entities\EYM.Entities.csproj">
       <Project>{e9c810ab-daa0-4c23-ba22-2abd5ae5c68b}</Project>
       <Name>EYM.Entities</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\EYM.EntityFramework.Interfaces\EYM.EntityFramework.Interfaces.csproj">
       <Project>{d06bfb10-9192-49f8-8240-ac2105de6f2d}</Project>
       <Name>EYM.EntityFramework.Interfaces</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\EYM.Repositories.Interfaces\EYM.Repositories.Interfaces.csproj">
       <Project>{1c233b21-793c-453e-94cd-068e51a20f99}</Project>
       <Name>EYM.Repositories.Interfaces</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
