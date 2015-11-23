@@ -12,7 +12,11 @@ namespace EYM.Entities
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 		public double Price { get; set; }
-		public DateTime DateToOrder { get; set; }
+
+		public int MenuId { get; set; }
+
+		[ForeignKey("MenuId")]
+		public virtual Menu Menu { get; set; }
 
 		public int ProductTemplateId { get; set; }
 
