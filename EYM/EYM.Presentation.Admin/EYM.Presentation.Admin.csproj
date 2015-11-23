@@ -278,6 +278,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EYM.DBServices.Interfaces\EYM.DBServices.Interfaces.csproj">
+      <Project>{3e6bb10f-c30e-4d35-99f8-cec1f1663908}</Project>
+      <Name>EYM.DBServices.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EYM.Entities\EYM.Entities.csproj">
       <Project>{e9c810ab-daa0-4c23-ba22-2abd5ae5c68b}</Project>
       <Name>EYM.Entities</Name>

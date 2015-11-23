@@ -2,17 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
+using EYM.DBServices.Interfaces;
 using EYM.Entities;
 
 namespace EYM.Presentation.Admin.Controllers
 {
     public class ProvidersController : Controller
     {
+	    public IDBService<Provider> _db { get; set; }
+
+		//public ProvidersController()
+		//{
+			
+		//}
+
+		public ProvidersController(IDBService<Provider> db)
+		{
+			_db = db;
+		}
+
         // GET: Providers
         public ActionResult Index()
         {
-            return View();
+	        
+			//var service = GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(IDBService<Provider>));
+			//((IDBService<Provider>)service).Serve();
+			return View(_db.Serve());
         }
 
         // GET: Providers/Details/5
@@ -28,7 +45,7 @@ namespace EYM.Presentation.Admin.Controllers
         }
 
         // POST: Providers/Create
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public ActionResult Create(FormCollection collection)
         {
             try
@@ -50,7 +67,7 @@ namespace EYM.Presentation.Admin.Controllers
         }
 
         // POST: Providers/Edit/5
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
             try
@@ -72,7 +89,7 @@ namespace EYM.Presentation.Admin.Controllers
         }
 
         // POST: Providers/Delete/5
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try

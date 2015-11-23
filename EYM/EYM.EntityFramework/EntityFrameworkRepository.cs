@@ -73,7 +73,7 @@ namespace EYM.EntityFramework
         }
         public void Dispose()
         {
-            Dispose();
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
     }

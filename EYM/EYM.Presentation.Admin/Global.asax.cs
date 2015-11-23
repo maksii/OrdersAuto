@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
+using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using System.Web.Compilation;
 using System.Linq;
@@ -28,18 +29,20 @@ namespace EYM.Presentation.Admin
 			builder.RegisterAssemblyModules(ass);
 
 			// Get your HttpConfiguration.
-			var config = GlobalConfiguration.Configuration;
 			//var config = GlobalConfiguration.Configuration;
+			////var config = GlobalConfiguration.Configuration;
 
 			// Register your Web API controllers.
-			builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+			//builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
 			// OPTIONAL: Register the Autofac filter provider.
 			//builder.RegisterWebApiFilterProvider(config);
+			builder.RegisterControllers(typeof(MvcApplication).Assembly);
+			
 
 			// Set the dependency resolver to be Autofac.
 			var container = builder.Build();
-			config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+			DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 		}
 	}
 }
