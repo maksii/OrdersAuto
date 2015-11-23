@@ -32,12 +32,15 @@
   <ItemGroup>
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -63,20 +66,23 @@
     <ProjectReference Include="..\EYM.Entities\EYM.Entities.csproj">
       <Project>{e9c810ab-daa0-4c23-ba22-2abd5ae5c68b}</Project>
       <Name>EYM.Entities</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\EYM.EntityFramework.Interfaces\EYM.EntityFramework.Interfaces.csproj">
       <Project>{d06bfb10-9192-49f8-8240-ac2105de6f2d}</Project>
       <Name>EYM.EntityFramework.Interfaces</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\EYM.Repositories.Interfaces\EYM.Repositories.Interfaces.csproj">
       <Project>{1c233b21-793c-453e-94cd-068e51a20f99}</Project>
       <Name>EYM.Repositories.Interfaces</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Q /Y "$(TargetPath)" "$(SolutionDir)\EYM.Presentation.Public\Plugins"
-xcopy /Q /Y "$(TargetPath)" "$(SolutionDir)\EYM.Presentation.Admin\Plugins"</PostBuildEvent>
+    <PostBuildEvent>xcopy /Q /Y "$(TargetDir)*.dll" "$(SolutionDir)\EYM.Presentation.Public\Plugins\" 
+xcopy /Q /Y "$(TargetDir)*.dll" "$(SolutionDir)\EYM.Presentation.Admin\Plugins\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

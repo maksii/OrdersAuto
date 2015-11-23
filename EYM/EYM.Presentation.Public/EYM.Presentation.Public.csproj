@@ -252,6 +252,7 @@
     <ProjectReference Include="..\EYM.AppServices.Interfaces\EYM.AppServices.Interfaces.csproj">
       <Project>{777760ea-e48e-493a-b1ff-62ddf95c8e79}</Project>
       <Name>EYM.AppServices.Interfaces</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
