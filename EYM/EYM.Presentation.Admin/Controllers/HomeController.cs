@@ -10,7 +10,7 @@ namespace EYM.Presentation.Admin.Controllers
 		{
 
 			//var service = GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(IAppService));
-			//((IAppService)service).Serve();
+			//((IAppService)service).GetAll();
 
 			return View();
 		}

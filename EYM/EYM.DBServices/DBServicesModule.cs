@@ -8,8 +8,6 @@ namespace EYM.DBServices
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
-			//builder.Register(c => new DBService<IEntity>(c.Resolve<IGenericDataRepository<IEntity>>()))
-			//	.As<IDBService<IEntity>>();
 			builder.RegisterGeneric(typeof(DBService<>))
 				.As(typeof(IDBService<>))
 				.InstancePerDependency();

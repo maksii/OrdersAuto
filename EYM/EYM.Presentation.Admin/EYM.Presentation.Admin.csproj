@@ -266,6 +266,10 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Providers\Index.cshtml" />
+    <Content Include="Views\Providers\Create.cshtml" />
+    <Content Include="Views\Providers\Details.cshtml" />
+    <Content Include="Views\Providers\Edit.cshtml" />
+    <Content Include="Views\Providers\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -293,6 +297,10 @@
     <ProjectReference Include="..\EYM.EntityFramework\EYM.EntityFramework.csproj">
       <Project>{04a54a04-cc65-4caa-b943-a4d7f652cfe1}</Project>
       <Name>EYM.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EYM.Logging.Interfaces\EYM.Logging.Interfaces.csproj">
+      <Project>{19390d4f-482a-48cd-ab7c-7629921a6dd2}</Project>
+      <Name>EYM.Logging.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\EYM.Repositories.Interfaces\EYM.Repositories.Interfaces.csproj">
       <Project>{1c233b21-793c-453e-94cd-068e51a20f99}</Project>
