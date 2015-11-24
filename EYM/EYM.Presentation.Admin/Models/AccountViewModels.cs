@@ -3,20 +3,33 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EYM.Presentation.Admin.Models
 {
-    public class ExternalLoginConfirmationViewModel
-    {
-        [Required]
-        [Display(Name = "Email")]
-        public string Email {
+	public class ExternalLoginConfirmationViewModel
+	{
+		[Required]
+		[Display(Name = "Email")]
+		public string Email {
 			get;
 			set;
 		}
 
-		[Display(Name = "User Name")]
-		public string UserName
+		public string FirstName
 		{
 			get;
 			set;
+		}
+
+		public string LastName
+		{
+			get;
+			set;
+		}
+
+		public string FullName
+		{
+			get
+			{
+				return string.Format("{0} {1}", FirstName, LastName);
+			}
 		}
 	}
 

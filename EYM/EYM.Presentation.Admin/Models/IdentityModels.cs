@@ -21,7 +21,7 @@ namespace EYM.Presentation.Admin.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection", false)
         {
         }
 
@@ -30,6 +30,8 @@ namespace EYM.Presentation.Admin.Models
             return new ApplicationDbContext();
         }
 
-		public System.Data.Entity.DbSet<EYM.Entities.Provider> Providers { get; set; }
+		public DbSet<Entities.Provider> Providers { get; set; }
+		
+		public DbSet<Entities.User> UsersList { get; set; }
     }
 }
