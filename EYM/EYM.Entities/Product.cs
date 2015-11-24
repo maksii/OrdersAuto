@@ -15,13 +15,19 @@ namespace EYM.Entities
 
 		public int MenuId { get; set; }
 
+		public int ProductTemplateId { get; set; }
+
+		public int CategoryId { get; set; }
+		
 		[ForeignKey("MenuId")]
 		public virtual Menu Menu { get; set; }
 
-		public int ProductTemplateId { get; set; }
-
 		[ForeignKey("ProductTemplateId")]
 		public virtual ProductTemplate ProductTemplate { get; set; }
+
+		[ForeignKey("CategoryId")]
+		public virtual Category Category { get; set; }
+
 		public virtual List<OrderLine> OrderLines { get; set; }
 	}
 }
