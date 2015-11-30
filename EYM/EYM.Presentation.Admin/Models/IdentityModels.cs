@@ -32,6 +32,6 @@ namespace EYM.Presentation.Admin.Models
 
 		public DbSet<Entities.Provider> Providers { get; set; }
 		
-		public DbSet<Entities.User> UsersList { get; set; }
+		//public DbSet<Entities.User> UsersList { get; set; }
     }
 }
