@@ -5,6 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A2C7C712-23C1-4E6A-99DC-E9DC7FAD2FD6}</ProjectGuid>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EYM.Tests</RootNamespace>
@@ -33,8 +34,17 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\EYM.Presentation.Public\bin\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,11 +52,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestOrderLineClass.cs" />
+    <Compile Include="TestProductTemplateClass.cs" />
+    <Compile Include="TestProductTypeClass.cs" />
+    <Compile Include="TestProviderClass.cs" />
+    <Compile Include="TestProductClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestOrderClass.cs" />
+    <Compile Include="TestRoleClass.cs" />
     <Compile Include="TestsModule.cs" />
+    <Compile Include="TestUserBalanceClass.cs" />
+    <Compile Include="TestUserClass.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EYM.Entities\EYM.Entities.csproj">
+      <Project>{E9C810AB-DAA0-4C23-BA22-2ABD5AE5C68B}</Project>
+      <Name>EYM.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EYM.EntityFramework.Interfaces\EYM.EntityFramework.Interfaces.csproj">
+      <Project>{D06BFB10-9192-49F8-8240-AC2105DE6F2D}</Project>
+      <Name>EYM.EntityFramework.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EYM.EntityFramework\EYM.EntityFramework.csproj">
+      <Project>{04a54a04-cc65-4caa-b943-a4d7f652cfe1}</Project>
+      <Name>EYM.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EYM.Repositories.Interfaces\EYM.Repositories.Interfaces.csproj">
+      <Project>{1C233B21-793C-453E-94CD-068E51A20F99}</Project>
+      <Name>EYM.Repositories.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

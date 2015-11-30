@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using EYM.EntityFramework;
 
 namespace EYM.Tests
 {
@@ -6,11 +7,7 @@ namespace EYM.Tests
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
-			/*
-			Register your project dependencies here. Autofac will automatically process them on MVC app start
-			Syntax example:
-			builder.Register(c => new MyClass()).As<IMyInterface>();
-			*/
+			builder.RegisterType<EYMContext>().As<Context>().WithParameter("connectionString", "EYMContext");
 		}
 	}
 }

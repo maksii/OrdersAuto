@@ -6,6 +6,15 @@ namespace EYM.EntityFramework
 {
     public class EYMContext : Context
     {
+        public EYMContext() : base()
+        {
+            
+        }
+
+        public EYMContext(string connectionString) : base(connectionString)
+        {
+        }
+
         public DbSet<User> Users { get; set; }
         public DbSet<UserBalance> UserBalances { get; set; }
         public DbSet<Role> Rols { get; set; }
