@@ -22,6 +22,7 @@ namespace EYM.Presentation.Admin.Controllers
 			return View();
 		}
 
+		[System.Web.Mvc.Authorize]
 		public ActionResult Contact()
 		{
 			ViewBag.Message = "Your contact page.";

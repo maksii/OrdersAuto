@@ -10,7 +10,7 @@ using EYM.Presentation.Public.Models;
 
 namespace EYM.Presentation.Public.Controllers
 {
-    [Authorize]
+    [Authorize, Obsolete]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

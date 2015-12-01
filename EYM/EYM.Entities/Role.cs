@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using EYM.Repositories.Interfaces;
+using Microsoft.AspNet.Identity;
 
 namespace EYM.Entities
 {
-	public class Role : IEntity
+	public class Role : IRole<int>, IEntity
 	{
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]

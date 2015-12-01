@@ -43,7 +43,8 @@ namespace EYM.Presentation.Admin.Migrations
                         FirstName = c.String(),
                         LastName = c.String(),
                         Email = c.String(),
-                        IsActive = c.Boolean(nullable: false),
+						UserName = c.String(),
+						IsActive = c.Boolean(nullable: false),
                         RoleId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
