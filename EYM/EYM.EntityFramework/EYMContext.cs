@@ -4,7 +4,7 @@ using EYM.Entities;
 
 namespace EYM.EntityFramework
 {
-    public class EYMContext : Context
+    public class EYMContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<UserBalance> UserBalances { get; set; }
