@@ -9,14 +9,14 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace EYM.Entities
 {
-    public class User : IUser<int>, IEntity
+	public class User : IUser<int>, IEntity
 	{
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 
 		public string UserName { get; set; }
-	    public string FirstName { get; set; }
+		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Email { get; set; }
 		public bool IsActive { get; set; }
@@ -32,6 +32,7 @@ namespace EYM.Entities
 		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User, int> manager)
 		{
 			var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+			userIdentity.AddClaim(new Claim("UserFullName", FullName));
 
 			return userIdentity;
 		}

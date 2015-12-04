@@ -14,29 +14,12 @@ using Microsoft.Owin.Security;
 
 namespace EYM.Presentation.Admin.Models
 {
-	public class CustomUserManager : UserManager<User, int>
+	public class EYMUserStore : IUserStore<User, int>, IUserLoginStore<User, int>, IUserEmailStore<User, int>
 	{
-		public CustomUserManager(IUserStore<User, int> store)
-			: base(store)
-		{
-		}
-	}
+		private readonly ApplicationDbContext _database;
 
-	public class CustomSignInManager : SignInManager<User, int>
-	{
-		public CustomSignInManager(CustomUserManager userManager, IAuthenticationManager authenticationManager)
-			: base(userManager, authenticationManager)
+		public EYMUserStore(ApplicationDbContext context)
 		{
-		}
-	}
-
-	public class CustomUserStore : IUserStore<User, int>, IUserLoginStore<User, int>, IUserEmailStore<User, int>
-	{
-		private ApplicationDbContext _database;
-
-		public CustomUserStore(ApplicationDbContext context)
-		{
-			//this.database = new ApplicationDbContext();
 			_database = context;
 		}
 
@@ -121,6 +104,4 @@ namespace EYM.Presentation.Admin.Models
 			return Task.Run(() => myUser);
 		}
 	}
-
-
 }

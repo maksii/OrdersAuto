@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Configuration;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -29,14 +31,26 @@ namespace EYM.Presentation.Admin.Controllers
 
 		public ApplicationSignInManager SignInManager
 		{
-			get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
-			private set { _signInManager = value; }
+			get
+			{
+				return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+			}
+			private set
+			{
+				_signInManager = value;
+			}
 		}
 
 		public ApplicationUserManager UserManager
 		{
-			get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-			private set { _userManager = value; }
+			get
+			{
+				return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+			}
+			private set
+			{
+				_userManager = value;
+			}
 		}
 
 		//
@@ -54,41 +68,6 @@ namespace EYM.Presentation.Admin.Controllers
 			ViewBag.ReturnUrl = returnUrl;
 			ViewBag.ErrorMessage = "You are not allowed to login with this credentials!";
 			return View("Login");
-		}
-
-		//
-		// POST: /Account/Login
-		[HttpPost]
-		[AllowAnonymous]
-		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
-		{
-			if (!ModelState.IsValid)
-			{
-				return View(model);
-			}
-
-			// This doesn't count login failures towards account lockout
-			// To enable password failures to trigger account lockout, change to shouldLockout: true
-			var result =
-				await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-			switch (result)
-			{
-				case SignInStatus.Success:
-					return RedirectToLocal(returnUrl);
-				case SignInStatus.LockedOut:
-					return View("Lockout");
-				case SignInStatus.RequiresVerification:
-					return RedirectToAction("SendCode", new
-					{
-						ReturnUrl = returnUrl,
-						RememberMe = model.RememberMe
-					});
-				case SignInStatus.Failure:
-				default:
-					ModelState.AddModelError("", "Invalid login attempt.");
-					return View(model);
-			}
 		}
 
 		//
@@ -117,8 +96,11 @@ namespace EYM.Presentation.Admin.Controllers
 			if (loginInfo == null || string.IsNullOrEmpty(loginInfo.Email))
 				return RedirectToAction("Login");
 
+			var domains = (ConfigurationManager.AppSettings["AllowedDomainsToLogin"] ?? "dev-pro.net").Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+			var users = (ConfigurationManager.AppSettings["AllowedUsersToLogin"] ?? "").Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+
 			var emailChunks = loginInfo.Email.Split('@');
-			if (emailChunks.Length != 2 || string.Compare(emailChunks[1], "dev-pro.net", StringComparison.OrdinalIgnoreCase) != 0)
+			if (emailChunks.Length != 2 && (!users.Any(loginInfo.Email.Contains) || !domains.Any(emailChunks[1].Contains)))
 				return RedirectToAction("LoginFailed");
 
 			//TODO: https://developers.google.com/+/web/people/
@@ -135,27 +117,33 @@ namespace EYM.Presentation.Admin.Controllers
 
 			var givenName = loginInfo.ExternalIdentity.FindFirstValue(ClaimTypes.GivenName);
 			var lastName = loginInfo.ExternalIdentity.FindFirstValue(ClaimTypes.Surname);
-			var externalLoginInfo = new ExternalLoginConfirmationViewModel
+			var externalLoginInfo = new ExternalLoginModel
 			{
 				Email = loginInfo.Email,
 				FirstName = givenName,
 				LastName = lastName,
 			};
 
-			if (await _externalUserLogin(externalLoginInfo))
+			var result = await _externalUserLogin(externalLoginInfo);
+			if (result.Result)
 				return RedirectToLocal(returnUrl);
+
+			if (result.IdentityResult != null)
+				AddErrors(result.IdentityResult);
 
 			return View("ExternalLoginFailure");
 		}
 
-		private async Task<bool> _externalUserLogin(ExternalLoginConfirmationViewModel model)
+		private async Task<ExternalUserLoginResult> _externalUserLogin(ExternalLoginModel model)
 		{
+			var result = new ExternalUserLoginResult();
+
 			if (!ModelState.IsValid)
-				return false;
+				return result;
 
 			var info = await AuthenticationManager.GetExternalLoginInfoAsync();
 			if (info == null)
-				return false;
+				return result;
 
 			var user = new User
 			{
@@ -164,16 +152,15 @@ namespace EYM.Presentation.Admin.Controllers
 				Email = model.Email,
 				UserName = model.Email
 			};
-			var result = await UserManager.CreateAsync(user);
-			if (result.Succeeded)
+			result.IdentityResult = await UserManager.CreateAsync(user);
+			if (result.IdentityResult.Succeeded)
 			{
 				await SignInManager.SignInAsync(user, false, false);
-				return true;
+				result.Result = true;
+				return result;
 			}
 
-			AddErrors(result);
-
-			return false;
+			return result;
 		}
 
 		[HttpPost]
@@ -219,7 +206,10 @@ namespace EYM.Presentation.Admin.Controllers
 
 		private IAuthenticationManager AuthenticationManager
 		{
-			get { return HttpContext.GetOwinContext().Authentication; }
+			get
+			{
+				return HttpContext.GetOwinContext().Authentication;
+			}
 		}
 
 		private void AddErrors(IdentityResult result)
@@ -253,13 +243,22 @@ namespace EYM.Presentation.Admin.Controllers
 				UserId = userId;
 			}
 
-			public string LoginProvider { get; set; }
-			public string RedirectUri { get; set; }
-			public string UserId { get; set; }
+			public string LoginProvider
+			{
+				get; set;
+			}
+			public string RedirectUri
+			{
+				get; set;
+			}
+			public string UserId
+			{
+				get; set;
+			}
 
 			public override void ExecuteResult(ControllerContext context)
 			{
-				var properties = new AuthenticationProperties {RedirectUri = RedirectUri};
+				var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
 				if (UserId != null)
 				{
 					properties.Dictionary[XsrfKey] = UserId;
