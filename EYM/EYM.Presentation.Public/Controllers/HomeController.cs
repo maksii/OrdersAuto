@@ -1,6 +1,4 @@
 ﻿using System.Web.Mvc;
-using Autofac;
-using EYM.AppServices.Interfaces;
 using System.Web;
 
 

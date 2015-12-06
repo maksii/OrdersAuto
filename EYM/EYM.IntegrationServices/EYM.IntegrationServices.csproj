@@ -51,8 +51,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Q /Y "$(TargetDir)*.dll" "$(SolutionDir)\EYM.Presentation.Public\Plugins\" 
-xcopy /Q /Y "$(TargetDir)*.dll" "$(SolutionDir)\EYM.Presentation.Admin\Plugins\"</PostBuildEvent>
+    <PostBuildEvent>echo $(TargetFileName) &gt; $(TargetName).txt
+xcopy /Q /Y /C "$(TargetDir)*.dll" "$(SolutionDir)\EYM.Presentation.Public\bin\" /exclude:$(TargetName).txt
+xcopy /Q /Y /C "$(TargetDir)*.dll" "$(SolutionDir)\EYM.Presentation.Admin\bin\" /exclude:$(TargetName).txt
+xcopy /Q /Y "$(TargetPath)" "$(SolutionDir)\EYM.Presentation.Public\Plugins\" 
+xcopy /Q /Y "$(TargetPath)" "$(SolutionDir)\EYM.Presentation.Admin\Plugins\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

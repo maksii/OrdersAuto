@@ -36,7 +36,7 @@
     </Reference>
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,7 +55,7 @@
     <ProjectReference Include="..\EYM.Logging.Interfaces\EYM.Logging.Interfaces.csproj">
       <Project>{19390d4f-482a-48cd-ab7c-7629921a6dd2}</Project>
       <Name>EYM.Logging.Interfaces</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -72,8 +72,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Q /Y "$(TargetDir)*.dll" "$(SolutionDir)\EYM.Presentation.Public\Plugins\" 
-xcopy /Q /Y "$(TargetDir)*.dll" "$(SolutionDir)\EYM.Presentation.Admin\Plugins\"</PostBuildEvent>
+    <PostBuildEvent>echo $(TargetFileName) &gt; $(TargetName).txt
+xcopy /Q /Y /C "$(TargetDir)*.dll" "$(SolutionDir)\EYM.Presentation.Public\bin\" /exclude:$(TargetName).txt
+xcopy /Q /Y /C "$(TargetDir)*.dll" "$(SolutionDir)\EYM.Presentation.Admin\bin\" /exclude:$(TargetName).txt
+xcopy /Q /Y "$(TargetPath)" "$(SolutionDir)\EYM.Presentation.Public\Plugins\" 
+xcopy /Q /Y "$(TargetPath)" "$(SolutionDir)\EYM.Presentation.Admin\Plugins\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

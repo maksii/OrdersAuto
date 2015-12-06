@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using EYM.AppServices.Interfaces;
 using System.Web.Http;
 
 namespace EYM.Presentation.Admin.Controllers
