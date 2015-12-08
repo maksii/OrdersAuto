@@ -20,5 +20,10 @@ namespace EYM.EntityFramework
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
-    }
+
+		public static EYMContext Create()
+		{
+			return new EYMContext();
+		}
+	}
 }

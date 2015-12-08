@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using EYM.Entities;
+using EYM.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -20,7 +21,7 @@ namespace EYM.Presentation.Admin
 
 		public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
 		{
-			return new ApplicationUserManager(new EYMUserStore(context.Get<ApplicationDbContext>()));
+			return new ApplicationUserManager(new EYMUserStore(context.Get<EYMContext>()));
 		}
 	}
 

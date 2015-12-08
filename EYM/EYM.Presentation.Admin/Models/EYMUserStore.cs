@@ -2,23 +2,18 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using EYM.Entities;
+using EYM.EntityFramework;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
-using Microsoft.Owin.Security;
 
 namespace EYM.Presentation.Admin.Models
 {
 	public class EYMUserStore : IUserStore<User, int>, IUserLoginStore<User, int>, IUserEmailStore<User, int>
 	{
-		private readonly ApplicationDbContext _database;
+		private readonly EYMContext _database;
 
-		public EYMUserStore(ApplicationDbContext context)
+		public EYMUserStore(EYMContext context)
 		{
 			_database = context;
 		}

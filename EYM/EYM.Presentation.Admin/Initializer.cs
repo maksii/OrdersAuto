@@ -9,6 +9,8 @@ namespace EYM.Presentation.Admin
 	{
 		public static void Initialize()
 		{
+			return;
+
 			var pluginFolder = new DirectoryInfo(HostingEnvironment.MapPath("~/Plugins"));
 			try
 			{
