@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using EYM.Entities;
 using EYM.EntityFramework;
 using Microsoft.AspNet.Identity;
 
-namespace EYM.Presentation.Admin.Models
+namespace EYM.UserStore
 {
 	public class EYMUserStore : IUserStore<User, int>, IUserLoginStore<User, int>, IUserEmailStore<User, int>
 	{

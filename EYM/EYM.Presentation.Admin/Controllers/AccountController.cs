@@ -1,57 +1,26 @@
-﻿using System;
-using System.Configuration;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using EYM.Entities;
+using EYM.LoginProvider.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using EYM.Presentation.Admin.Models;
 
 namespace EYM.Presentation.Admin.Controllers
 {
 	[Authorize]
 	public class AccountController : Controller
 	{
-		private ApplicationSignInManager _signInManager;
-		private ApplicationUserManager _userManager;
+		private readonly ILoginProvider _loginProvider;
 
-		public AccountController()
+		public AccountController(ILoginProvider loginProvider)
 		{
+			_loginProvider = loginProvider;
 		}
 
-		public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-		{
-			UserManager = userManager;
-			SignInManager = signInManager;
-		}
+		public ApplicationSignInManager SignInManager => HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
 
-		public ApplicationSignInManager SignInManager
-		{
-			get
-			{
-				return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-			}
-			private set
-			{
-				_signInManager = value;
-			}
-		}
-
-		public ApplicationUserManager UserManager
-		{
-			get
-			{
-				return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-			}
-			private set
-			{
-				_userManager = value;
-			}
-		}
+		public ApplicationUserManager UserManager => HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
 		//
 		// GET: /Account/Login
@@ -92,20 +61,12 @@ namespace EYM.Presentation.Admin.Controllers
 			if (User.Identity.IsAuthenticated)
 				return RedirectToLocal(returnUrl);
 
-			var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-			if (loginInfo == null || string.IsNullOrEmpty(loginInfo.Email))
+			var loginInfo = await _loginProvider.GetLoginInfo(AuthenticationManager);
+			if (string.IsNullOrEmpty(loginInfo?.Email))
 				return RedirectToAction("Login");
 
-			var domains = (ConfigurationManager.AppSettings["AllowedDomainsToLogin"] ?? "dev-pro.net").Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
-			var users = (ConfigurationManager.AppSettings["AllowedUsersToLogin"] ?? "").Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
-
-			var emailChunks = loginInfo.Email.Split('@');
-			if (emailChunks.Length != 2 && (!users.Any(loginInfo.Email.Contains) || !domains.Any(emailChunks[1].Contains)))
+			if (!_loginProvider.IsUserAllowedToLogin(loginInfo.Email))
 				return RedirectToAction("LoginFailed");
-
-			//TODO: https://developers.google.com/+/web/people/
-			//GET https://www.googleapis.com/plus/v1/people/me
-			//loginInfo.DefaultUserName = loginInfo.ExternalIdentity.GetUserName();
 
 			var user = await UserManager.FindByEmailAsync(loginInfo.Email);
 
@@ -115,16 +76,7 @@ namespace EYM.Presentation.Admin.Controllers
 				return RedirectToLocal(returnUrl);
 			}
 
-			var givenName = loginInfo.ExternalIdentity.FindFirstValue(ClaimTypes.GivenName);
-			var lastName = loginInfo.ExternalIdentity.FindFirstValue(ClaimTypes.Surname);
-			var externalLoginInfo = new ExternalLoginModel
-			{
-				Email = loginInfo.Email,
-				FirstName = givenName,
-				LastName = lastName,
-			};
-
-			var result = await _externalUserLogin(externalLoginInfo);
+			var result = await _loginProvider.Login(ModelState.IsValid, AuthenticationManager, UserManager, SignInManager);
 			if (result.Result)
 				return RedirectToLocal(returnUrl);
 
@@ -132,35 +84,6 @@ namespace EYM.Presentation.Admin.Controllers
 				AddErrors(result.IdentityResult);
 
 			return View("ExternalLoginFailure");
-		}
-
-		private async Task<ExternalUserLoginResult> _externalUserLogin(ExternalLoginModel model)
-		{
-			var result = new ExternalUserLoginResult();
-
-			if (!ModelState.IsValid)
-				return result;
-
-			var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-			if (info == null)
-				return result;
-
-			var user = new User
-			{
-				FirstName = model.FirstName,
-				LastName = model.LastName,
-				Email = model.Email,
-				UserName = model.Email
-			};
-			result.IdentityResult = await UserManager.CreateAsync(user);
-			if (result.IdentityResult.Succeeded)
-			{
-				await SignInManager.SignInAsync(user, false, false);
-				result.Result = true;
-				return result;
-			}
-
-			return result;
 		}
 
 		[HttpPost]
@@ -181,21 +104,6 @@ namespace EYM.Presentation.Admin.Controllers
 
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing)
-			{
-				if (_userManager != null)
-				{
-					_userManager.Dispose();
-					_userManager = null;
-				}
-
-				if (_signInManager != null)
-				{
-					_signInManager.Dispose();
-					_signInManager = null;
-				}
-			}
-
 			base.Dispose(disposing);
 		}
 

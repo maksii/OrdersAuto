@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using EYM.Entities;
 using EYM.EntityFramework;
@@ -7,7 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using EYM.Presentation.Admin.Models;
+using EYM.UserStore;
 
 namespace EYM.Presentation.Admin
 {
@@ -17,6 +16,7 @@ namespace EYM.Presentation.Admin
 		public ApplicationUserManager(IUserStore<User, int> store)
 			: base(store)
 		{
+			UserValidator = new UserValidator<User, int>(this) { AllowOnlyAlphanumericUserNames = false };
 		}
 
 		public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
