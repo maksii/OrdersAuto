@@ -279,13 +279,17 @@
       <Project>{e9c810ab-daa0-4c23-ba22-2abd5ae5c68b}</Project>
       <Name>EYM.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EYM.Logging.Interfaces\EYM.Logging.Interfaces.csproj">
-      <Project>{19390d4f-482a-48cd-ab7c-7629921a6dd2}</Project>
-      <Name>EYM.Logging.Interfaces</Name>
+    <ProjectReference Include="..\EYM.EntityFramework.Interfaces\EYM.EntityFramework.Interfaces.csproj">
+      <Project>{D06BFB10-9192-49F8-8240-AC2105DE6F2D}</Project>
+      <Name>EYM.EntityFramework.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\EYM.EntityFramework\EYM.EntityFramework.csproj">
       <Project>{04A54A04-CC65-4CAA-B943-A4D7F652CFE1}</Project>
       <Name>EYM.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EYM.Logging.Interfaces\EYM.Logging.Interfaces.csproj">
+      <Project>{19390d4f-482a-48cd-ab7c-7629921a6dd2}</Project>
+      <Name>EYM.Logging.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\EYM.LoginProvider.Interfaces\EYM.LoginProvider.Interfaces.csproj">
       <Project>{937507c2-9c20-4913-bf26-45626e846db5}</Project>

@@ -2,6 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using EYM.LoginProvider.Interfaces;
+using EYM.UserStore;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -112,13 +113,7 @@ namespace EYM.Presentation.Admin.Controllers
 		// Used for XSRF protection when adding external logins
 		private const string XsrfKey = "XsrfId";
 
-		private IAuthenticationManager AuthenticationManager
-		{
-			get
-			{
-				return HttpContext.GetOwinContext().Authentication;
-			}
-		}
+		private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
 		private void AddErrors(IdentityResult result)
 		{
