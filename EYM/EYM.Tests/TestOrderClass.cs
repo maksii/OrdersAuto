@@ -10,110 +10,94 @@ namespace EYM.Tests
     [TestClass]
     public class TestOrderClass
     {
-        EYMRepository<Order> orderRepository;
-        EYMRepository<Role> roleRepository;
-        EYMRepository<User> userRepository;
-        EYMContext context;
-        User user;
+        EYMRepository<Order> _orderRepository;
+        EYMRepository<Role> _roleRepository;
+        EYMRepository<User> _userRepository;
+        EYMContext _context;
+        User _user;
+        TransactionScope _transaction;
 
 
         [TestInitialize]
         public void Init()
         {
-            context = new EYMContext("EYMContext");
-            orderRepository = new EYMRepository<Order>(context);
-            roleRepository = new EYMRepository<Role>(context);
-            userRepository = new EYMRepository<User>(context);
+            _context = new EYMContext("EYMContext");
+            _orderRepository = new EYMRepository<Order>(_context);
+            _roleRepository = new EYMRepository<Role>(_context);
+            _userRepository = new EYMRepository<User>(_context);
+            _transaction = new TransactionScope();
         }
 
         public void TestHelper()
         {
-            roleRepository.Add(new Role());
-            var roleId = roleRepository.GetAll().First().Id;
-            user = new User { RoleId = roleId };
-            userRepository.Add(user);
+            _roleRepository.Add(new Role());
+            var roleId = _roleRepository.GetAll().First().Id;
+            _user = new User { RoleId = roleId };
+            _userRepository.Add(_user);
         }
 
-        [TestMethod]
-        public void GetAllOrders()
-        {
-            using (new TransactionScope())
-            {
-                int count = orderRepository.GetAll().Count();
-                Assert.AreEqual(0, count);
-            }
-        }
-
-        [TestMethod]
+      [TestMethod]
         public void AddOrder()
         {
-            using (new TransactionScope())
-            {
                 TestHelper();
-                int count = orderRepository.GetAll().Count();
-                orderRepository.Add(new Order { UserId = user.Id, Date = DateTime.Now });
-                Assert.AreEqual(1, count + 1);
-            }
+                int count = _orderRepository.GetAll().Count();
+                _orderRepository.Add(new Order { UserId = _user.Id, Date = DateTime.Now });
+                Assert.AreEqual(count, count + 1);
         }
 
         [TestMethod]
         public void DeleteOrder()
-        {
-            using (new TransactionScope())
-            {
+        {           
                 TestHelper();
-                var order1 = new Order {UserId = user.Id, Date = DateTime.Now};
-                var order2 = new Order { UserId = user.Id, Date = DateTime.Now };
-                orderRepository.Add(order1);
-                orderRepository.Add(order2);
-                int count = orderRepository.GetAll().Count();
+                var order1 = new Order {UserId = _user.Id, Date = DateTime.Now};
+                var order2 = new Order { UserId = _user.Id, Date = DateTime.Now };
+                _orderRepository.Add(order1);
+                _orderRepository.Add(order2);
+                int count = _orderRepository.GetAll().Count();
                 Assert.AreEqual(2, count);
-                orderRepository.Delete(order1);
-                count = orderRepository.GetAll().Count();              
-                Assert.AreEqual(1, count);
-            }
+                _orderRepository.Delete(order1);
+                count = _orderRepository.GetAll().Count();              
+                Assert.AreEqual(count, count-1);
         }
 
         [TestMethod]
         public void UpdateOrder()
-        {
-            using (new TransactionScope())
-            {
+        {           
                 TestHelper();
-                var order = new Order {UserId = user.Id, Date = new DateTime(2015, 11, 4)};
-                orderRepository.Add(order);
+                var order = new Order {UserId = _user.Id, Date = new DateTime(2015, 11, 4)};
+                _orderRepository.Add(order);
                 order.Date = new DateTime(2011,7,4);
-                orderRepository.Update(order);
-                Assert.AreEqual(new DateTime(2011, 7, 4), orderRepository.GetAll().First().Date);
-            }
+                _orderRepository.Update(order);
+                Assert.AreEqual(new DateTime(2011, 7, 4), _orderRepository.GetAll().First().Date);
         }
 
 
         [TestMethod]
         public void GetOrder()
         {
-            using (new TransactionScope())
-            {
+           
                 TestHelper();
-                var order = new Order { UserId = user.Id, Date = new DateTime(2015, 11, 4) };
-                orderRepository.Add(order);
-                order = orderRepository.Get(order.Id);
-                Assert.AreEqual(order.Date, new DateTime(2015, 11, 4));
-            }
+                var order = new Order { UserId = _user.Id, Date = new DateTime(2015, 11, 4) };
+                _orderRepository.Add(order);
+                order = _orderRepository.Get(order.Id);
+                Assert.AreEqual(order.Date, new DateTime(2015, 11, 4));       
         }
 
         [TestMethod]
         public void FindOrder()
-        {
-            using (new TransactionScope())
-            {
+        {           
                 TestHelper();
-                orderRepository.Add(new Order { Date = new DateTime(2015, 7, 8) , UserId = user.Id});
+                _orderRepository.Add(new Order { Date = new DateTime(2015, 7, 8) , UserId = _user.Id});
                 DateTime time = new DateTime(2015, 7, 8);
-                Order order = orderRepository.FindBy(_order => _order.Date == time).First();
+                Order order = _orderRepository.FindBy(_order => _order.Date == time).First();
                 Assert.IsNotNull(order);
-                Assert.AreEqual(order.Date, time);
-            }
+                Assert.AreEqual(order.Date, time);        
+        }
+
+        [TestCleanup]
+        public void TestCleanREsources()
+        {
+            _transaction.Dispose();
         }
 
 

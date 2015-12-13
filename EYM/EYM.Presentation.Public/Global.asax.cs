@@ -8,10 +8,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
-using Autofac.Core;
 using Autofac.Integration.Mvc;
-using EYM.AppServices.Interfaces;
-using EYM.AppServices;
 
 namespace EYM.Presentation.Public
 {

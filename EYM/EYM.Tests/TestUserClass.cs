@@ -9,106 +9,99 @@ namespace EYM.Tests
     [TestClass]
     public class TestUserClass
     {
-        EYMRepository<User> repository;
-        EYMContext context;
-        EYMRepository<Role> roleRepository;
-        Role role;
+        EYMRepository<User> _repository;
+        EYMContext _context;
+        EYMRepository<Role> _roleRepository;
+        Role _role;
+        TransactionScope _transaction;
 
         [TestInitialize]
         public void Init()
         {
-            context = new EYMContext("EYMContext");
-            repository = new EYMRepository<User>(context);
-            roleRepository = new EYMRepository<Role>(context);
+            _context = new EYMContext("EYMContext");
+            _repository = new EYMRepository<User>(_context);
+            _roleRepository = new EYMRepository<Role>(_context);
+            _transaction = new TransactionScope();
+
         }
 
         public void TestHelper()
         {
-            role = new Role();
-            roleRepository.Add(role);
-        }
-
-        [TestMethod]
-        public void GetAllUser()
-        {
-            using (new TransactionScope())
-            {
-                int count = repository.GetAll().Count();
-                Assert.AreEqual(0, count);
-            }
+            _role = new Role();
+            _roleRepository.Add(_role);
         }
 
         [TestMethod]
         public void AddUser()
         {
-            using (new TransactionScope())
-            {
+          
                 TestHelper();
-                int count = repository.GetAll().Count();
-                repository.Add(new User {RoleId =role.Id});
-                Assert.AreEqual(1, count + 1);
-            }
+                int count = _repository.GetAll().Count();
+                _repository.Add(new User {RoleId =_role.Id});
+                Assert.AreEqual(count, count + 1);
+           
         }
 
         [TestMethod]
         public void DeleteUser()
         {
-            using (new TransactionScope())
-            {
+          
                 TestHelper();
-                User user1 = new User { RoleId = role.Id };
-                User user2 = new User { RoleId = role.Id };
-                repository.Add(user1);
-                repository.Add(user2);
-                int count = repository.GetAll().Count();            
+                User user1 = new User { RoleId = _role.Id };
+                User user2 = new User { RoleId = _role.Id };
+                _repository.Add(user1);
+                _repository.Add(user2);
+                int count = _repository.GetAll().Count();            
                 Assert.AreEqual(2, count);
-                repository.Delete(user1);
-                Assert.AreEqual(1, repository.GetAll().Count());
-            }
+                _repository.Delete(user1);
+                Assert.AreEqual(count-1, _repository.GetAll().Count());
+           
         }
 
         [TestMethod]
         public void UpdateUser()
         {
-            using (new TransactionScope())
-            {
+           
                 TestHelper();
-                User user = new User {RoleId = role.Id};
-                repository.Add(user);
+                User user = new User {RoleId = _role.Id};
+                _repository.Add(user);
                 user.Email = "test@mail.ru";
-                repository.Update(user);
-                Assert.AreEqual("test@mail.ru", repository.Get(user.Id).Email);
-            }
+                _repository.Update(user);
+                Assert.AreEqual("test@mail.ru", _repository.Get(user.Id).Email);
+           
         }
 
 
         [TestMethod]
         public void GetUser()
         {
-            using (new TransactionScope())
-            {
+           
                 TestHelper();
-                User user = new User {RoleId = role.Id, FirstName = "EYMtestUser"};
-                repository.Add(user);           
-                User user2 = repository.Get(user.Id);
+                User user = new User {RoleId = _role.Id, FirstName = "EYMtestUser"};
+                _repository.Add(user);           
+                User user2 = _repository.Get(user.Id);
                 Assert.AreEqual(user2.FirstName, "EYMtestUser");
-            }
+           
         }
 
         [TestMethod]
         public void FindUser()
         {
-            using (new TransactionScope())
-            {
+          
                 TestHelper();
-                roleRepository.Add(new Role());
-                repository.Add(new User { RoleId = role.Id, FirstName = "EYMtestUser" });
-                User user = repository.FindBy(_user => _user.FirstName == "EYMtestUser").First();
+                _roleRepository.Add(new Role());
+                _repository.Add(new User { RoleId = _role.Id, FirstName = "EYMtestUser" });
+                User user = _repository.FindBy(_user => _user.FirstName == "EYMtestUser").First();
                 Assert.IsNotNull(user);
                 Assert.AreEqual(user.FirstName, "EYMtestUser");
-            }
+           
         }
 
+        [TestCleanup]
+        public void TestCleanREsources()
+        {
+            _transaction.Dispose();
+        }
 
     }
 }

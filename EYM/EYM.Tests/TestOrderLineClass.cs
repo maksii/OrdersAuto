@@ -23,6 +23,7 @@ namespace EYM.Tests
         Product _product;
         Order _order;
         User _user;
+        TransactionScope _transaction;
 
 
         [TestInitialize]
@@ -37,6 +38,7 @@ namespace EYM.Tests
             _orderLeneRepository = new EYMRepository<OrderLine>(_context);
             _roleRepository = new EYMRepository<Role>(_context);
             _userRepository = new EYMRepository<User>(_context);
+            _transaction = new TransactionScope();
 
         }
 
@@ -61,32 +63,20 @@ namespace EYM.Tests
     
 
         [TestMethod]
-        public void GetAllOrderLines()
-        {
-            using (new TransactionScope())
-            {
-                int count = _orderLeneRepository.GetAll().Count();
-                Assert.AreEqual(0, count);
-            }
-        }
-
-        [TestMethod]
         public void AddOrderLine()
         {
-            using (new TransactionScope())
-            {
+            
                 TestHelper();
                 int count = _orderLeneRepository.GetAll().Count();
                 _orderLeneRepository.Add(new OrderLine { ProductId = _product.Id, OrderId = _order.Id});
-                Assert.AreEqual(1, count + 1);
-            }
+                Assert.AreEqual(count, count + 1);
+           
         }
 
         [TestMethod]
         public void DeleteOrderLine()
         {
-            using (new TransactionScope())
-            {
+           
                 TestHelper();
                 var orderLine1 = new OrderLine { ProductId = _product.Id, OrderId = _order.Id};
                 var orderLine2 = new OrderLine { ProductId = _product.Id, OrderId = _order.Id };
@@ -96,52 +86,52 @@ namespace EYM.Tests
                 Assert.AreEqual(2, count);
                 _orderLeneRepository.Delete(orderLine2);
                 count = _orderLeneRepository.GetAll().Count();
-                Assert.AreEqual(1, count);
-            }
-        }
+                Assert.AreEqual(count, count-1);
+          }
 
         [TestMethod]
         public void UpdateOrderLine()
         {
-            using (new TransactionScope())
-            {
+           
                 TestHelper();
                 var orderLine = new OrderLine { ProductId = _product.Id, OrderId = _order.Id, Comment = "Test"};
                 _orderLeneRepository.Add(orderLine);
                 orderLine.Comment = "Test2";
                 _orderLeneRepository.Update(orderLine);
                 Assert.AreEqual("Test2", _orderLeneRepository.GetAll().First().Comment);
-            }
         }
 
 
         [TestMethod]
         public void GetOrderLine()
         {
-            using (new TransactionScope())
-            {
+           
                 TestHelper();
                 var orderLine = new OrderLine { ProductId = _product.Id, OrderId = _order.Id, Comment = "Test" };
                 _orderLeneRepository.Add(orderLine);
                 orderLine = _orderLeneRepository.Get(orderLine.Id);
                 Assert.AreEqual(orderLine.Comment, "Test");
-            }
+           
         }
 
         [TestMethod]
         public void FindOrderLine()
         {
-            using (new TransactionScope())
-            {
+           
                 TestHelper();
                 var orderLine = new OrderLine { ProductId = _product.Id, OrderId = _order.Id, Comment = "Test" };
                 _orderLeneRepository.Add(orderLine);
                 orderLine = _orderLeneRepository.FindBy(_orderLine => _orderLine.Comment == "Test").First();
                 Assert.IsNotNull(orderLine);
                 Assert.AreEqual(orderLine.Comment, "Test");
-            }
+           
         }
 
+        [TestCleanup]
+        public void TestCleanREsources()
+        {
+            _transaction.Dispose();
+        }
 
     }
 }
