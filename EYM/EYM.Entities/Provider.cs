@@ -20,5 +20,25 @@ namespace EYM.Entities
 		public string Type { get; set; }
 
 		public virtual List<ProductTemplate> ProductTemplates { get; set; }
+
+		#region Constructors
+
+		public Provider()
+		{
+			
+		}
+
+		public Provider(string name, string phone, string email, 
+			string imagePath, string description, string additionalinfo, string type)
+		{
+			Name = name;
+			Phone = phone;
+			Email = email;
+			ImagePath = imagePath;
+			Description = description;
+			AdditionalInfo = additionalinfo;
+			Type = type;
+		}
+		#endregion
 	}
 }

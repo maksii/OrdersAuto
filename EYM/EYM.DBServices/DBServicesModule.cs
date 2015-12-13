@@ -8,8 +8,9 @@ namespace EYM.DBServices
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
-			builder.Register(c => new MyDBService(c.Resolve<IMyRepository>()))
-				.As<IMyDBService>();
+			builder.RegisterGeneric(typeof(DBService<>))
+				.As(typeof(IDBService<>))
+				.InstancePerDependency();
 		}
 	}
 }

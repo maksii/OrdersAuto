@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace EYM.EntityFramework
 {
-    class EntityFrameworkRepository<TEntity> : IGenericDataRepository<TEntity>
+    public  class EntityFrameworkRepository<TEntity> : IGenericDataRepository<TEntity>
         where TEntity : class, IEntity
     {
         private IContext _context;
@@ -73,7 +73,7 @@ namespace EYM.EntityFramework
         }
         public void Dispose()
         {
-            Dispose();
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
     }

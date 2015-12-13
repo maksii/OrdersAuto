@@ -9,8 +9,8 @@ namespace EYM.AppServices
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
-			builder.Register(c => new MyService(c.Resolve<IMyDBService>()))
-				.As<IAppService>();
+			//builder.Register(c => new MyService(c.Resolve<IDBService>()))
+			//	.As<IAppService>();
 
 		}
 	}

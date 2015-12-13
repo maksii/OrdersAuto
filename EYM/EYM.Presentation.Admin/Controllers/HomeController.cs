@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using EYM.AppServices.Interfaces;
 using System.Web.Http;
 
 namespace EYM.Presentation.Admin.Controllers
@@ -10,7 +9,7 @@ namespace EYM.Presentation.Admin.Controllers
 		{
 
 			//var service = GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(IAppService));
-			//((IAppService)service).Serve();
+			//((IAppService)service).GetAll();
 
 			return View();
 		}

@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using EYM.EntityFramework.Interfaces;
+using EYM.Repositories.Interfaces;
 
 namespace EYM.EntityFramework
 {
@@ -11,6 +13,15 @@ namespace EYM.EntityFramework
 			Syntax example:
 			builder.Register(c => new MyClass()).As<IMyInterface>();
 			*/
+			builder.RegisterGeneric(typeof(EntityFrameworkRepository<>))
+				.As(typeof(IGenericDataRepository<>))
+				.InstancePerDependency();
+
+			builder.RegisterType<EYMContext>()
+				.As<IContext>();
+
+
+
 		}
 	}
 }

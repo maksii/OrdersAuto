@@ -1,4 +1,4 @@
-namespace EYM.Presentation.Admin.Migrations
+namespace EYM.EntityFramework.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
