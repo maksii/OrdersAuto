@@ -28,9 +28,15 @@ namespace EYM.LoginProvider
 			_allowedUsers.AddRange((ConfigurationManager.AppSettings["AllowedUsersToLogin"] ?? "").Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries));
 		}
 
-		public IEnumerable<string> AllowedUsers => _allowedUsers;
+		public IEnumerable<string> AllowedUsers
+		{
+			get { return _allowedUsers; }
+		}
 
-		public IEnumerable<string> AllowedDomains => _allowedDomains;
+		public IEnumerable<string> AllowedDomains
+		{
+			get { return _allowedDomains; }
+		}
 
 		public bool IsUserAllowedToLogin(string email)
 		{

@@ -38,6 +38,9 @@ namespace EYM.Entities
 		}
 
 		[NotMapped]
-		public string FullName => $"{FirstName} {LastName}";
+		public string FullName
+		{
+			get { return FirstName + " " + LastName; }
+		}
 	}
 }

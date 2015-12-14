@@ -19,9 +19,21 @@ namespace EYM.Presentation.Admin.Controllers
 			_loginProvider = loginProvider;
 		}
 
-		public ApplicationSignInManager SignInManager => HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+		public ApplicationSignInManager SignInManager
+		{
+			get
+			{
+				return HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+			}
+		}
 
-		public ApplicationUserManager UserManager => HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+		public ApplicationUserManager UserManager
+		{
+			get
+			{
+				return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+			}
+		}
 
 		//
 		// GET: /Account/Login
@@ -63,7 +75,7 @@ namespace EYM.Presentation.Admin.Controllers
 				return RedirectToLocal(returnUrl);
 
 			var loginInfo = await _loginProvider.GetLoginInfo(AuthenticationManager);
-			if (string.IsNullOrEmpty(loginInfo?.Email))
+			if (loginInfo == null || string.IsNullOrEmpty(loginInfo.Email))
 				return RedirectToAction("Login");
 
 			if (!_loginProvider.IsUserAllowedToLogin(loginInfo.Email))
@@ -113,7 +125,13 @@ namespace EYM.Presentation.Admin.Controllers
 		// Used for XSRF protection when adding external logins
 		private const string XsrfKey = "XsrfId";
 
-		private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
+		private IAuthenticationManager AuthenticationManager
+		{
+			get
+			{
+				return HttpContext.GetOwinContext().Authentication;
+			}
+		}
 
 		private void AddErrors(IdentityResult result)
 		{
