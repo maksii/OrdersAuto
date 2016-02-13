@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Optimization;
+using EYM.Presentation.Admin.App_Code.Web;
 
 namespace EYM.Presentation.Admin
 {
@@ -23,9 +24,11 @@ namespace EYM.Presentation.Admin
 					  "~/Scripts/bootstrap.js",
 					  "~/Scripts/respond.js"));
 
-			bundles.Add(new StyleBundle("~/Content/css").Include(
-					  "~/Content/bootstrap.css",
-					  "~/Content/site.css"));
+            var cssBundle = new StyleBundle("~/Content/css").Include(
+                      "~/Content/bootstrap.css",
+                      "~/Content/site.less");
+            cssBundle.Transforms.Add(new LessTransform());
+            bundles.Add(cssBundle);
 		}
 	}
 }
